@@ -1,43 +1,53 @@
-# Seismic Noise Attenuation using SVD
-# seismic-svd-denoising
+# Linear Noise Attenuation in Seismic Data using Singular Value Decomposition (SVD)
 
-This repository contains a Python implementation for simulating a seismic shot record and attenuating linear noise (Air Waves) using **Singular Value Decomposition (SVD)**.
+This repository implements a data-driven approach to attenuate coherent linear noise (specifically **Air Waves**) from seismic shot records using **Singular Value Decomposition (SVD)**. Unlike classical f-k filters, this method focuses on preserving the underlying hyperbolic reflections while targeting high-energy coherent noise.
 
-##  Project Overview
-The goal of this project is to model a synthetic seismic dataset based on a specific earth model and then apply signal processing arrival techniques to separate signal from noise.
 
-### Earth Model Specifications:
-- **Structure:** One layer over a half-space.
-- **Layer Thickness:** 500 m.
-- **P-wave Velocities:** $V_{p1} = 2000$ m/s, $V_{p2} = 3500$ m/s.
-- **Densities:** $\rho_1 = 2.2$ g/cm³, $\rho_2 = 2.6$ g/cm³.
-- **Source:** Ricker Wavelet (Peak Frequency: 60 Hz).
+Seismic sections act like an "ultrasound of the earth". However, real-world data is often contaminated with **Air Waves**—high-amplitude, low-velocity linear noise that masks valuable hyperbolic reflections. This project demonstrates:
+1. Generation of a synthetic seismic shot record with primaries, multiples, and air waves.
+2. Comparative analysis between classical **f-k filtering** and **SVD-based denoising**.
+3. Effective separation of signal and noise subspaces.
 
-### Survey Geometry:
-- **Type:** Split-spread survey.
-- **Stations:** 100 receivers.
-- **Station Interval:** 50 m.
-- **Near Offset:** 150 m.
-- **Sampling Interval:** 4 ms.
+## Singular Value Decomposition (SVD)
+SVD decomposes a seismic data matrix $A$ into three matrices:
 
-##  Features
-1. **Forward Modeling:** - Generation of Primary reflections.
-   - Simulation of 1st, 2nd, and 3rd order surface multiples.
-   - Addition of **Air Wave** ($V \approx 340$ m/s) as coherent linear noise.
-2. **SVD Filtering:** - Decomposing the seismic section into singular values.
-   - Identifying and removing the dominant components associated with the high-energy linear noise.
-3. **Multi-Domain Analysis:**
-   - Visualization in **T-X (Time-Space)** domain.
-   - Visualization in **F-K (Frequency-Wavenumber)** domain to observe velocity-based separation.
+$$A = U \Sigma V^T$$
 
-##  Results
-The code generates several plots, including:
-- The raw shot record with air waves.
-- The isolated noise component.
-- The denoised seismic section.
-- Singular value spectrum for filter threshold selection.
+Where:
+* **$U$ and $V$**: Orthogonal matrices representing the left and right singular vectors (eigenimages).
+* **$\Sigma$**: A diagonal matrix containing singular values representing the energy of each component.
 
-## How to Run
-Ensure you have the following libraries installed:
-```bash
-pip install numpy matplotlib scipy
+In seismic processing, high-energy coherent noise (like air waves) typically aligns with the first few singular values (Rank-1 approximation), allowing us to isolate the noise model and subtract it from the original data.
+
+##  Methodology
+The workflow involves the following steps:
+1. **Model Definition**: Establishing earth parameters (thickness: 500m, P-wave velocities: 2-3.5 m/ms, density: 2.2-2.6 g/cm³).
+2. **Synthetic Generation**: Creating a shot record with 100 stations and a Ricker wavelet (60 Hz peak frequency).
+3. **SVD Application**: Applying the algorithm to the entire data matrix to estimate the air wave.
+4. **Subtraction**: Removing the estimated noise model from the original record to reveal hidden reflections.
+
+##  Key Results
+### Time-Space (t-x) & f-k Domain Analysis
+The SVD filter successfully attenuates the V-shaped air wave noise while maintaining the lateral continuity of hyperbolic reflections.
+
+| Shot Record (Input) | SVD Denoised Output | Airwave output |
+| :---: | :---: | :---: |
+| ![Input](images/download.png) | ![Output](images/Denoiseddata.png) | ![fk](images/Airwave.png) |
+
+
+
+**Preservation**: Unlike f-k filters that may blur reflections at crossing points, SVD preserves the amplitude and phase of the desired signal.
+* **Trace Comparison**: Single trace analysis at various offsets (200m and 400m) confirms that the air wave energy is removed without distorting the wavelet of the reflections.
+
+## Conclusions
+* **Efficiency**: SVD Rank-1 approximation is a powerful tool for targeting high-energy linear noise.
+* **Clarity**: After denoising, hyperbolic reflections and multiples (1st, 2nd, and 3rd order) become clearly visible.
+* **Data-Driven**: The method is adaptive and does not require a predefined velocity model for noise removal.
+
+##  References
+1. Chiu, S. K., and Howell, J. E. (2008). *Attenuation of coherent noise using localized adaptive eigenimage filter*. SEG Expanded Abstracts.
+2. Porsani, M. J., et al. (2009). *Ground-roll attenuation based on SVD filtering*. SEG Technical Program Expanded Abstracts.
+3. Freire, S. L. M., and Ulrych, T. J. (1988). *Application of singular value decomposition to vertical seismic profiling*. Geophysics.
+
+---
+
