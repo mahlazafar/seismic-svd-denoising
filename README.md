@@ -30,7 +30,7 @@ The workflow involves the following steps:
 ### Time-Space (t-x) & f-k Domain Analysis
 The SVD filter successfully attenuates the V-shaped air wave noise while maintaining the lateral continuity of hyperbolic reflections.
 
-| Shot Record (Input) | SVD Denoised Output | Airwave output |
+| Shot Records | SVD Denoised Output | Airwave output |
 | :---: | :---: | :---: |
 | ![Input](images/download.png) | ![Output](images/Denoised.png) | ![fk](images/Airwave.png) |
 
