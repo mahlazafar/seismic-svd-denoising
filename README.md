@@ -3,7 +3,7 @@
 
 This repository contains a Python implementation for simulating a seismic shot record and attenuating linear noise (Air Waves) using **Singular Value Decomposition (SVD)**.
 
-## 📌 Project Overview
+##  Project Overview
 The goal of this project is to model a synthetic seismic dataset based on a specific earth model and then apply signal processing arrival techniques to separate signal from noise.
 
 ### Earth Model Specifications:
@@ -20,7 +20,7 @@ The goal of this project is to model a synthetic seismic dataset based on a spec
 - **Near Offset:** 150 m.
 - **Sampling Interval:** 4 ms.
 
-## 🛠 Features
+##  Features
 1. **Forward Modeling:** - Generation of Primary reflections.
    - Simulation of 1st, 2nd, and 3rd order surface multiples.
    - Addition of **Air Wave** ($V \approx 340$ m/s) as coherent linear noise.
@@ -30,14 +30,14 @@ The goal of this project is to model a synthetic seismic dataset based on a spec
    - Visualization in **T-X (Time-Space)** domain.
    - Visualization in **F-K (Frequency-Wavenumber)** domain to observe velocity-based separation.
 
-## 📊 Results
+##  Results
 The code generates several plots, including:
 - The raw shot record with air waves.
 - The isolated noise component.
 - The denoised seismic section.
 - Singular value spectrum for filter threshold selection.
 
-## 🚀 How to Run
+## How to Run
 Ensure you have the following libraries installed:
 ```bash
 pip install numpy matplotlib scipy
