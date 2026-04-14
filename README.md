@@ -32,7 +32,7 @@ The SVD filter successfully attenuates the V-shaped air wave noise while maintai
 
 | Shot Record (Input) | SVD Denoised Output | Airwave output |
 | :---: | :---: | :---: |
-| ![Input](images/download.png) | ![Output](images/Denoiseddata.png) | ![fk](images/Airwave.png) |
+| ![Input](images/download.png) | ![Output](images/Denoised.png) | ![fk](images/Airwave.png) |
 
 
 
